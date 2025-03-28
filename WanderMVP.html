@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Wander App</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    :root {
+      --bg: #f4f4f4;
+      --text: #333;
+      --card: #fff;
+      --accent: #28a745;
+      --accent-dark: #218838;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    header {
+      background: #333;
+      color: white;
+      padding: 15px 25px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      font-size: 22px;
+      font-weight: bold;
+    }
+
+    .logo img {
+      height: 30px;
+      margin-right: 10px;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin: 0 10px;
+      font-size: 15px;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      padding: 20px;
+      gap: 20px;
+    }
+
+    .card {
+      background: var(--card);
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      flex: 1;
+      min-width: 300px;
+      transition: transform 0.2s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-3px);
+    }
+
+    .btn {
+      background: var(--accent);
+      color: white;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+
+    .btn:hover {
+      background: var(--accent-dark);
+    }
+
+    .badge {
+      background: #e0ffe0;
+      padding: 6px 12px;
+      border-radius: 8px;
+      margin-right: 10px;
+      display: inline-block;
+      margin-top: 5px;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+    }
+
+    label.toggle {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 10px 0;
+    }
+
+    .toggle input[type="checkbox"] {
+      width: 40px;
+      height: 20px;
+      appearance: none;
+      background: #ccc;
+      border-radius: 20px;
+      position: relative;
+      outline: none;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .toggle input[type="checkbox"]::before {
+      content: "";
+      position: absolute;
+      width: 18px;
+      height: 18px;
+      background: white;
+      border-radius: 50%;
+      top: 1px;
+      left: 1px;
+      transition: transform 0.3s ease;
+    }
+
+    .toggle input[type="checkbox"]:checked {
+      background: var(--accent);
+    }
+
+    .toggle input[type="checkbox"]:checked::before {
+      transform: translateX(20px);
+    }
+
+    .review-dots span {
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #ccc;
+      margin: 0 5px;
+      cursor: pointer;
+    }
+
+    .review-dots span.selected {
+      background: var(--accent);
+    }
+
+    .form-section {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    h2 {
+      margin-top: 0;
+    }
+  </style>
+</head>
+<body>
+<header>
+  <div class="logo">
+    <img src="https://cdn-icons-png.flaticon.com/512/616/616408.png" alt="Goat">
+    Wander
+  </div>
+  <nav>
+    <a href="#dashboard" onclick="showSection('dashboard')">Dashboard</a>
+    <a href="#events" onclick="showSection('events')">Events</a>
+    <a href="#settings" onclick="showSection('settings')">Settings</a>
+    <a href="#profile" onclick="showSection('profile')">Profile</a>
+  </nav>
+</header>
+
+<div id="dashboard" class="container">
+  <div class="card">
+    <h2>Welcome, Nick 👋</h2>
+    <p><strong>Wander Net Member</strong></p>
+    <p><strong>Interests:</strong> 🎮 Gaming, 🍻 Bar Crawls, 🏀 Basketball</p>
+    <p><strong>Progress:</strong><br>✅ Mission: "Explore East Austin" <br> 3/5 Tasks Completed</p>
+    <span class="badge">🏅 Explorer</span>
+    <span class="badge">🔥 First Event</span>
+    <br><br>
+    <button class="btn" onclick="showSection('settings')">View All Settings</button>
+  </div>
+
+  <div class="card">
+    <h3>Suggested Events for You</h3>
+    <p>🌮 <strong>Tacos & Tech Meetup</strong><br>Meet startup founders over tacos & beer</p>
+    <button class="btn" onclick="markAttended(this)">Attend</button>
+    <div class="review-dots">
+      <span onclick="selectDot(this)"></span>
+      <span onclick="selectDot(this)"></span>
+      <span onclick="selectDot(this)"></span>
+      <span onclick="selectDot(this)"></span>
+      <span onclick="selectDot(this)"></span>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Featured Businesses</h3>
+    <ul>
+      <li><strong>HopHeads Brewery</strong> – Hosting 3 events</li>
+      <li><strong>Code & Coffee</strong> – Tech mixers every Friday</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>Wander Membership Tiers</h3>
+    <p>🎒 <strong>Wander Free</strong> – Pay per event. Connect locally.</p>
+    <p>🚀 <strong>Wander Plus</strong> – $25/month, 2 events.</p>
+    <p>💼 <strong>Wander Net</strong> – $30/month, 4 events.</p>
+    <p>🏢 <strong>Wander Team</strong> – $500–$5000 for company quests.</p>
+    <a href="https://www.paypal.com" target="_blank"><button class="btn">Upgrade Your Membership</button></a>
+  </div>
+</div>
+
+<div id="events" class="container" style="display:none">
+  <div class="card">
+    <h2>Events</h2>
+    <p>🎨 <strong>Paint & Sip Night</strong><br>Rooftop painting with wine & friends</p>
+    <button class="btn" onclick="markAttended(this)">Attend</button>
+    <div class="review-dots">
+      <span onclick="selectDot(this)"></span>
+      <span onclick="selectDot(this)"></span>
+      <span onclick="selectDot(this)"></span>
+      <span onclick="selectDot(this)"></span>
+      <span onclick="selectDot(this)"></span>
+    </div>
+  </div>
+</div>
+
+<div id="settings" class="container" style="display:none">
+  <div class="card">
+    <h2>Settings</h2>
+    <form id="toggleSettings"></form>
+  </div>
+</div>
+
+<div id="profile" class="container" style="display:none">
+  <div class="card form-section">
+    <h2>Edit Your Profile</h2>
+    <label>Name</label>
+    <input type="text" placeholder="Full Name" />
+
+    <label>Age</label>
+    <input type="number" placeholder="Your Age" />
+
+    <label>Education</label>
+    <input type="text" placeholder="Your Education" />
+
+    <label>Industry</label>
+    <select id="industrySelect"></select>
+
+    <label>Interests</label>
+    <select id="interestSelect"></select>
+
+    <button class="btn" onclick="saveProfile()">Save Profile</button>
+  </div>
+</div>
+<script>
+  const sections = ["dashboard", "events", "settings", "profile"];
+
+  function showSection(id) {
+    sections.forEach(sec => {
+      document.getElementById(sec).style.display = (sec === id) ? "flex" : "none";
+    });
+  }
+
+  function markAttended(btn) {
+    btn.textContent = "Attended ✅";
+    btn.disabled = true;
+  }
+
+  function selectDot(dot) {
+    const dots = dot.parentElement.querySelectorAll('span');
+    dots.forEach(d => d.classList.remove('selected'));
+    dot.classList.add('selected');
+  }
+
+  function saveProfile() {
+    alert("Profile saved!");
+  }
+
+  // 100 sample industries and interests
+  const industries = Array.from({length: 100}, (_, i) => `Industry ${i + 1}`);
+  const interests = Array.from({length: 100}, (_, i) => `Interest ${i + 1}`);
+
+  function populateSelect(id, items) {
+    const select = document.getElementById(id);
+    items.forEach(item => {
+      const opt = document.createElement("option");
+      opt.value = item;
+      opt.textContent = item;
+      select.appendChild(opt);
+    });
+  }
+
+  function generateToggles() {
+    const container = document.getElementById("toggleSettings");
+    for (let i = 1; i <= 30; i++) {
+      const label = document.createElement("label");
+      label.className = "toggle";
+      label.innerHTML = `
+        <span>Setting #${i}</span>
+        <input type="checkbox" onchange="localStorage.setItem('setting${i}', this.checked)">
+      `;
+      container.appendChild(label);
+    }
+  }
+
+  // Load everything on page ready
+  window.onload = () => {
+    populateSelect("industrySelect", industries);
+    populateSelect("interestSelect", interests);
+    generateToggles();
+    showSection("dashboard");
+  };
+</script>
+</body>
+</html>
